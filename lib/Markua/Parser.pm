@@ -3,6 +3,8 @@ use strict;
 use warnings;
 use Path::Tiny qw(path);
 
+our $VERSION = 0.01;
+
 sub new {
     my ($class) = @_;
     my $self = bless {}, $class;
