@@ -8,13 +8,15 @@ use Markua::Parser;
 
 my @cases = ('heading1', 'headers');
 
-plan tests => 1 + scalar @cases;
+plan tests => 1 + 2 * scalar @cases;
 
 my $m = Markua::Parser->new;
 isa_ok $m, 'Markua::Parser';
 
 for my $case (@cases) {
-    my $result = $m->parse_file("t/input/$case.md");
+    my ($result, $errors) = $m->parse_file("t/input/$case.md");
     is_deeply $result, decode_json( path("t/dom/$case.json")->slurp_utf8 );
+    is_deeply $errors, [], "Errors of $case";
+    #diag explain $errors;
 }
 

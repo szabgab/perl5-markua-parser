@@ -14,15 +14,28 @@ sub new {
 sub parse_file {
     my ($self, $filename) = @_;
     my @entries;
+    my @errors;
+    my $cnt = 0;
     for my $line (path($filename)->lines_utf8) {
+        $cnt++;
         if ($line =~ /^(#{1,6}) (\S.*)/) {
             push @entries, {
                 tag => 'h' . length($1),
                 text => $2,
             };
+            next;
+        }
+
+        if ($line =~ /^\s*$/) {
+            next;
+        }
+
+        push @errors, {
+            row => $cnt,
+            line => $line,
         }
     }
-    return \@entries;
+    return \@entries, \@errors;
 }
 
 
