@@ -15,10 +15,10 @@ sub parse_file {
     my ($self, $filename) = @_;
     my @entries;
     for my $line (path($filename)->lines_utf8) {
-        if ($line =~ /^# (\S.*)/) {
+        if ($line =~ /^(#{1,6}) (\S.*)/) {
             push @entries, {
-                tag => 'h1',
-                text => $1,
+                tag => 'h' . length($1),
+                text => $2,
             };
         }
     }
