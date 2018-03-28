@@ -109,6 +109,9 @@ sub save_tag {
     if ($self->{tag} and $self->{tag} eq 'list') {
         if ($self->{list}{ok}) {
             delete $self->{list}{raw};
+            delete $self->{list}{ok};
+            delete $self->{list}{space};
+            delete $self->{list}{bullet};
             push @$entries, {
                 tag => $self->{tag},
                 list => $self->{list},

@@ -1,37 +1,28 @@
 [
    {
       "list" : {
-         "bullet" : "-",
          "items" : [
             "A list with a single bullet"
          ],
-         "ok" : 1,
-         "space" : " ",
          "type" : "bulleted"
       },
       "tag" : "list"
    },
    {
       "list" : {
-         "bullet" : "-",
          "items" : [
             "Two spaces",
             "Another bullet point with 2 spaces"
          ],
-         "ok" : 1,
-         "space" : "  ",
          "type" : "bulleted"
       },
       "tag" : "list"
    },
    {
       "list" : {
-         "bullet" : "-",
          "items" : [
             "Four spaces is still a bulleted list"
          ],
-         "ok" : 1,
-         "space" : "    ",
          "type" : "bulleted"
       },
       "tag" : "list"
