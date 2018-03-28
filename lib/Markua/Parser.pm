@@ -31,6 +31,28 @@ sub parse_file {
             next;
         }
 
+        # numbered list
+        if ($line =~ m{\A(\d+)([.\)])( {1,4}|\t)(\S.*)}) {
+            my ($number, $sep, $space, $text) = ($1, $2, $3, $4);
+            if (not $self->{tag}) {
+                $self->{tag} = 'numbered-list';
+                $self->{list} = [];
+            }
+
+            if ($self->{tag} eq 'numbered-list') {
+                push @{ $self->{list} }, {
+                        number => $number,
+                        sep    => $sep,
+                        space  => $space,
+                        text   => $text,
+                        raw    => $line,
+                };
+                next;
+            }
+
+            die "What to do if a numbered list starts in the middle of another element?";
+        }
+
         # bulleted list
         if ($line =~ m{\A([\*-])( {1,4}|\t)(\S.*)}) {
             my ($bullet, $space, $text) = ($1, $2, $3);
@@ -104,6 +126,22 @@ sub parse_file {
 
 sub save_tag {
     my ($self, $entries) = @_;
+
+    if ($self->{tag} and $self->{tag} eq 'numbered-list') {
+        # TODO: verify that it is a proper list
+        for my $row (@{ $self->{list} }) {
+            delete $row->{raw};
+            delete $row->{sep};
+            delete $row->{space};
+        }
+        push @$entries, {
+            tag => $self->{tag},
+            list => $self->{list},
+        };
+        $self->{tag} = undef;
+        delete $self->{list};
+        return;
+    }
 
 
     if ($self->{tag} and $self->{tag} eq 'list') {
