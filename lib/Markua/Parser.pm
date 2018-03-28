@@ -177,6 +177,67 @@ sub save_tag {
     return;
 }
 
-
 1;
+
+__END__
+
+=head1 NAME
+
+Markua::Parser - Parsing Markua files and for writing books, generating DOM
+
+=head1 SYNOPSIS
+
+    use Markua::Parser;
+    my $m = Markua::Parser->new;
+    my ($result, $errors) = $m->parse_file("path/to/file.md");
+
+=head1 DESCRIPTION
+
+L<Markua|https://leanpub.com/markua/read> is a Markdown inspired language to write books.
+It was created by Peter Armstrong for L<LeanPub|https://leanpub.com/>
+They have an in-house partial implementation in Ruby.
+
+This is an Open Source partial implementation in Perl.
+
+The development process is described in the L<Creating a Markua Parser in Perl 5|https://leanpub.com/markua-parser-in-perl5> eBook.
+
+=head1 COPYRIGHT
+
+Copyright 2018 Gabor Szabo L<https://szabgab.com/>
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl 5 itself.
+
+=head1 DISCLAIMER OF WARRANTY
+
+BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
+FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
+OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
+PROVIDE THE SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
+EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE SOFTWARE IS WITH
+YOU. SHOULD THE SOFTWARE PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL
+NECESSARY SERVICING, REPAIR, OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+REDISTRIBUTE THE SOFTWARE AS PERMITTED BY THE ABOVE LICENCE, BE
+LIABLE TO YOU FOR DAMAGES, INCLUDING ANY GENERAL, SPECIAL, INCIDENTAL,
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE
+THE SOFTWARE (INCLUDING BUT NOT LIMITED TO LOSS OF DATA OR DATA BEING
+RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD PARTIES OR A
+FAILURE OF THE SOFTWARE TO OPERATE WITH ANY OTHER SOFTWARE), EVEN IF
+SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
+
+
+=cut
+
+# Copyright 2018 Gabor Szabo https://szabgab.com/
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
 
