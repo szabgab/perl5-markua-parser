@@ -6,7 +6,7 @@ use JSON::MaybeXS qw(decode_json);
 use Path::Tiny qw(path);
 use Markua::Parser;
 
-my @cases = ('heading1', 'headers', 'paragraphs', 'include', 'bulleted-list');
+my @cases = ('heading1', 'headers', 'paragraphs', 'include', 'bulleted-list', 'bulleted-list-dash');
 
 plan tests => 1 + 2 * scalar @cases;
 
