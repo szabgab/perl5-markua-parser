@@ -42,7 +42,7 @@
    },
    {
       "tag" : "p",
-      "text" : "One spaceAnother number of spaces. The whole thing becomes a paragraph"
+      "text" : "* One space\n*  Another number of spaces. The whole thing becomes a paragraph"
    },
    {
       "tag" : "p",

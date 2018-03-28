@@ -41,6 +41,7 @@ sub parse_file {
                 $self->{list}{space} = $space;
                 $self->{list}{ok} = 1;
                 $self->{list}{items} = [$text];
+                $self->{list}{raw} = [$line];
                 next;
             }
 
@@ -50,6 +51,7 @@ sub parse_file {
                     $self->{list}{space} ne $space) {
                     $self->{list}{ok} = 0;
                 }
+                push @{ $self->{list}{raw} }, $line;
                 push @{ $self->{list}{items} }, $text;
                 next;
             }
@@ -106,6 +108,7 @@ sub save_tag {
 
     if ($self->{tag} and $self->{tag} eq 'list') {
         if ($self->{list}{ok}) {
+            delete $self->{list}{raw};
             push @$entries, {
                 tag => $self->{tag},
                 list => $self->{list},
@@ -115,9 +118,9 @@ sub save_tag {
             return;
         }
 
-        # If it is a failed list, convert if to paragraph
+        # If it is a failed list, convert it to paragraph
         $self->{tag} = 'p';
-        $self->{text} = join '', @{ $self->{list}{items} };
+        $self->{text} = join '', @{ $self->{list}{raw} };
         delete $self->{list};
     }
 
