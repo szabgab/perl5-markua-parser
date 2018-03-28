@@ -32,7 +32,7 @@ sub parse_file {
         }
 
         # bulleted list
-        if ($line =~ m{\A(\*)( {1,4}|\t)(\S.*)}) {
+        if ($line =~ m{\A([\*-])( {1,4}|\t)(\S.*)}) {
             my ($bullet, $space, $text) = ($1, $2, $3);
             if (not $self->{tag}) {
                 $self->{tag} = 'list';
