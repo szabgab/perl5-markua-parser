@@ -157,20 +157,25 @@ sub save_tag {
 
     if ($self->{tag} and $self->{tag} eq 'numbered-list') {
         # TODO: verify that it is a proper list
-        for my $row (@{ $self->{list} }) {
-            delete $row->{raw};
-            delete $row->{sep};
-            delete $row->{space};
+        if (@{ $self->{list} } == 1) {
+            $self->{tag} = 'p';
+            $self->{text} = $self->{list}[0]{raw};
+            delete $self->{list};
+        } else {
+            for my $row (@{ $self->{list} }) {
+                delete $row->{raw};
+                delete $row->{sep};
+                delete $row->{space};
+            }
+            push @$entries, {
+                tag => $self->{tag},
+                list => $self->{list},
+            };
+            $self->{tag} = undef;
+            delete $self->{list};
+            return;
         }
-        push @$entries, {
-            tag => $self->{tag},
-            list => $self->{list},
-        };
-        $self->{tag} = undef;
-        delete $self->{list};
-        return;
     }
-
 
     if ($self->{tag} and $self->{tag} eq 'list') {
         if ($self->{list}{ok}) {
