@@ -5,6 +5,24 @@ use Path::Tiny qw(path);
 
 our $VERSION = 0.01;
 
+# Based on https://leanpub.com/markua/read#resource-types-and-formats
+my $extensions = <<'EXTENSION';
+txt        text    code      Unformatted code
+(other)    guess   code      Formatted code
+jpeg       jpeg    image     JPEG image
+jpg        jpeg    image     JPEG image
+png        png     image     PNG image
+EXTENSION
+
+my %format;
+my %type;
+for my $line (split /\n/, $extensions) {
+    chomp $line;
+    my ($ext, $format, $type) = split /\s+/, $line;
+    $format{$ext} = $format;
+    $type{$ext} = $type;
+}
+
 sub new {
     my ($class) = @_;
     my $self = bless {}, $class;
@@ -85,12 +103,22 @@ sub parse_file {
         if ($line =~ /\A ! \[([^\]]*)\]    \(([^\)]+)\)  \s* \Z/x) {
             my $title = $1;
             my $file_to_include = $2;
+            my ($extension) = $file_to_include =~ m{\.(\w+)\Z};
+            if (not defined $extension or not exists $format{$extension}) {
+                $extension  = '(other)';
+            }
+
+            my %attr = (
+                type   => $type{$extension},
+                format => $format{$extension},
+            );
             eval {
                 my $text = path("$dir/$file_to_include")->slurp_utf8;
                 push @entries, {
                     tag   => 'code',
                     title => $title,
                     text  => $text,
+                    attr  => \%attr,
                 };
             };
             if ($@) {
