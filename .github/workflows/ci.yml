@@ -1,0 +1,36 @@
+name: CI
+
+on: push
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, macos-latest, windows-latest]
+        perl: [ '5.32' ]
+    runs-on: ${{matrix.runner}}
+    name: OS ${{matrix.runner}} Perl ${{matrix.perl}}
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up perl
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+          perl-version: ${{ matrix.perl }}
+          #distribution: strawberry
+
+    #- name: Install cpanm
+    #  if: ${{ matrix.runner != "windows-latest" }}
+    #  run: |
+    #    curl -L https://cpanmin.us | perl - App::cpanminus
+
+    - name: Install module
+      run: |
+         cpanm --installdeps --notest .
+
+    - name: Run tests
+      run: |
+        perl Makefile.PL
+        make
+        make test
