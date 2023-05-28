@@ -1,6 +1,11 @@
 name: CI
 
-on: push
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+#  schedule:
+#    - cron: '42 5 * * *'
 
 jobs:
   build:
@@ -8,7 +13,11 @@ jobs:
       fail-fast: false
       matrix:
         runner: [ubuntu-latest, macos-latest] # TODO: fix code to run on Windows as well, windows-latest
-        perl: [ '5.32' ]
+        perl: [ '5.32', 5.36 ]
+        exclude:
+          - runner: windows-latest
+            perl: '5.36'
+
     runs-on: ${{matrix.runner}}
     name: OS ${{matrix.runner}} Perl ${{matrix.perl}}
     steps:
